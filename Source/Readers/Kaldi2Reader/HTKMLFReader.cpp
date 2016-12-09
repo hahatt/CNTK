@@ -1037,11 +1037,22 @@ bool HTKMLFReader<ElemType>::GetOneMinibatchToTrainOrTestDataBuffer(
             m_currentMBSize = 0;
             for (size_t i = 0; i < m_numberOfuttsPerMinibatch; i++)
             {
-                if (m_currentBufferFrames[i] > m_currentMBSize)
+                if (m_doMinibatchBufferTruncation)
                 {
-                    m_currentMBSize = m_currentBufferFrames[i];
+                    size_t numMinibatches = 1;
+                    numMinibatches = (ElemType) m_currentBufferFrames[i] / (ElemType) m_mbSize;
+                    numMinibatches += (m_currentBufferFrames[i] % m_mbSize == 0) ? 0 : 1;
+                    if (numMinibatches * m_mbSize > m_currentMBSize)
+                    {
+                        m_currentMBSize = numMinibatches * m_mbSize ;
+                    }
                 }
-            }
+                else 
+                {
+                    if (m_currentBufferFrames[i] > m_currentMBSize)
+                        m_currentMBSize = m_currentBufferFrames[i];
+                }
+             }
         }
 
         // We initialize the sentence boundary information before we process

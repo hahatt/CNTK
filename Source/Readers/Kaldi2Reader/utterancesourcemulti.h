@@ -1350,9 +1350,9 @@ public:
             const size_t lastchunk = chunkforframepos(globalte - 1);
             const size_t windowbegin = randomizedchunks[0][firstchunk].windowbegin;
             const size_t windowend = randomizedchunks[0][lastchunk].windowend;
-            if (verbosity)
-                fprintf(stderr, "getbatch: getting randomized frames [%zu..%zu] (%zu frames out of %zu requested) in sweep %zu; chunks [%zu..%zu] -> chunk window [%zu..%zu)\n",
-                        globalts, globalte, mbframes, framesrequested, sweep, firstchunk, lastchunk, windowbegin, windowend);
+            //if (verbosity)
+            //    fprintf(stderr, "getbatch: getting randomized frames [%zu..%zu] (%zu frames out of %zu requested) in sweep %zu; chunks [%zu..%zu] -> chunk window [%zu..%zu)\n",
+            //            globalts, globalte, mbframes, framesrequested, sweep, firstchunk, lastchunk, windowbegin, windowend);
             // release all data outside, and page in all data inside
             for (size_t k = 0; k < windowbegin; k++)
                 releaserandomizedchunk(k);
